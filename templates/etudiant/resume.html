@@ -852,43 +852,29 @@
                                 <div class="wd-file-apply style2">
                                     <div class="content">
                                         <h3>CV File</h3>
-                                        <form action="get">
-                                            <div class="group-seclect-file">
-                                                <div class="group-file">
-                                                    <div class="inner left ">
-                                                        <div class="title-box">
-                                                            <div class="sub-title fs-12 fw-6">Samle_cv_jobitex</div>
-                                                            <div class="fs-16 fw-7">PDF</div>
-                                                        </div>
-                                                        <i class="file-icon icon-file-pdf"></i>
-                                                        <i class="icon-close"></i>
-                                                    </div>
-                                                    <div class="inner left ">
-                                                        <div class="title-box">
-                                                            <div class="sub-title fs-12 fw-6">Samle_cv_jobitex</div>
-                                                            <div class="fs-16 fw-7">Doc</div>
-                                                        </div>
-                                                        <i class="file-icon icon-file-doc"></i>
-                                                        <i class="icon-close"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <!-- Contenu de la première section -->
 
-                                                 <div class="button-wrap flex2">
-                                                     <div class="tt-button button-browse">
-                                                          <form enctype="multipart/form-data" action="{% url 'resume' %}" method="POST">
-                                                            {% csrf_token %}
-                                                             <label  href="#">Browse
-                                                                   {{ fileform }}
-                                                                <input type="file" name="myfile" style="display: none;">
-                                                             </label>
-                                                           </form>
-                                                      </div>
-                                                 </div>
+                                            <form action="/etudiant/uploadedResumes" method="POST" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <div class="row-group-search home1">
+                                                  <div class="form-group-1">
+                                                    <div style="display: flex; justify-content: center;">
+                                                    <input type="file" name="file" placeholder="upload Resume" style="font-size: 30px; ">
+                                                    
+                                                    </div>
+                                                  </div>
+                                                  </div>
+                                                  <div class="form-group-4">
+                                              
+                                                    <br>
+                                                    <button type="submit" class="btn btn-find" value="Upload" style="font-size: 20px ;padding: 15px 15px; width: 100px; margin: 0 auto; display: block;">Upload</button>
+                                
+                                                  </div>
+                                                  <h4 style="text-align: center;color: aliceblue;"> </h4>
 
+                                                </div>
+                                              </form>
 
-                                        </form>
                                     </div>
                                 </div>
                             </div>

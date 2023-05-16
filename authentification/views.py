@@ -166,3 +166,4 @@ def activate(request, uidb64, token):
     else:
         messages.success(request, 'Activation failed please try again')
         return redirect('home')
+

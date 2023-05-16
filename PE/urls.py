@@ -7,6 +7,7 @@ urlpatterns = [
 
     path('',views.PeHome,name='PEHome'),
     path('dashboard', staff_member_required(views.dashboard), name='dashboard'),
+    path('reports', staff_member_required(views.reports), name='reports'),
     path('term-of-use.html', views.termsofuse, name='termsofuse'),
 
 ]

@@ -62,7 +62,7 @@
 
       <div class="mobile-header">
         <div id="logo" class="logo">
-            <a href="{% url 'home' %}">
+            <a href="/authentification">
             <img class="site-logo"  src="{% static 'images/JOBitLogo.png' %}" alt="Image" />
           </a>
         </div>
@@ -271,12 +271,14 @@
                     <a class="iteam-menu">Pages</a>
                     <ul class="sub-menu-mobile">
                       <li class="menu-item menu-item-mobile">
-                        <a href="about-us.html">About Us</a>
+                        <a href="/about-us.html">About Us</a>
                       </li>
                       <li class="menu-item menu-item-mobile">
                         <a href="accordion-page.html">FAQS</a>
                       </li>
-                      
+                      <li class="menu-item menu-item-mobile">
+                        <a href="term-of-use.html">Terms Of Use</a>
+                      </li>
                       <li class="menu-item menu-item-mobile">
                         <a href="pricing.html">Pricing</a>
                       </li>
@@ -301,7 +303,7 @@
 
                       </li>
                       <li class="menu-item menu-item-mobile">
-                        <a href="/PE/reports">Complaints</a>
+                        <a href="/contact-us">Contact Us</a>
                       </li>
                     </ul>
                   </li>
@@ -504,9 +506,7 @@
 
 
 
-      <div class="header-customize-item button" >
-        <a href="uploadoffer"style="margin-top: 5px; color: rgba(88, 6, 6, 0.929); font-size: 17px; padding: 2px 20px; display: block; background-color: rgb(255, 255, 255);border-radius: 4px; "">Upload Job Offer</a>
-      </div>
+
 
       <div class="mobile-footer">
         <div class="icon-infor d-flex aln-center">
@@ -560,7 +560,9 @@
 		    <li class="nav-sub">
                      <a href="about-us.html">About Us</a>
                     </li>
- 	      	   
+ 	      	    <li class="nav-sub">
+                     <a href="term-of-use.html">Terms Of Use</a>
+                    </li>
                      <li class="menu-item menu-item-mobile">
                           <a href="{% url 'signin' %}">Login</a>
 
@@ -573,7 +575,7 @@
 
                       </li>
                     <li class="nav-sub">
-                      <a href="/PE/reports">Complaints</a>
+                          <a href="contact-us.html">Contact Us</a>
                     </li>
                   </ul>
                 </nav>
@@ -590,9 +592,7 @@
                 <div class="name"></div>
 
               </div>
-              <div class="header-customize-item button" >
-                <a href="uploadoffer"style="margin-top: 5px; color: rgba(88, 6, 6, 0.929); font-size: 17px; padding: 2px 20px; display: block; background-color: rgb(255, 255, 255);border-radius: 4px; "">Upload Job Offer</a>
-              </div>
+
               
             </div>
             <div class="nav-filter">
@@ -605,39 +605,32 @@
 
      <!-- SLIDER-->
      <section class="tf-slider sl1 parallax" style="height: 100%; overflow: hidden;">
-
-        
-          <div class="content" style :" width="100%" height="100%" ">
-            <div style="text-align: center;">
-            <h2 class="text-white">Upload Offer</h2>
+      <div class="content" style="width: 100%; height: 100%;">
+        <div style="text-align: center;">
+          <h2 class="text-white">fill text</h2>
+        </div>
+        <br>
+        <div class="form-sl" style="padding: 10px 30px;">
+          <form action="/upload_complaints" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row-group-search home1" >
+              <div class="form-group-1">
+                  <input type="text" name="complaint_text" placeholder="Enter your complaint" style="font-size: 14px;">
+              </div>
             </div>
+            <div class="form-group-4">
+              <br>
+              <button type="submit" class="btn btn-find" style="font-size: 20px; padding: 15px 15px; width: 100px; margin: 0 auto; display: block;">Upload</button>
+            </div>
+            <h4 style="text-align: center; color: aliceblue;"></h4>
             <br>
-            <div class="form-sl" style="padding: 10px 30px;">
-              <form action="/uploadedOffers" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="row-group-search home1">
-                  <div class="form-group-1">
-                    <div style="display: flex; justify-content: center;">
-                    <input type="file" name="file" placeholder="upload offer" style="font-size: 30px; ">
-                    
-                    </div>
-                  </div>
-                  </div>
-                  <div class="form-group-4">
-                    <br>
-                    <button type="submit" class="btn btn-find" value="Upload" style="font-size: 20px ;padding: 15px 15px; width: 100px; margin: 0 auto; display: block;">Upload</button>
-
-                  </div>
-                  <h4 style="text-align: center;color: aliceblue;">sucess</h4>
-                </div>
-              </form>
-              <!-- End upload-->
-            </div>
-
-          </div>
-
-    <div class="overlay"></div>
-  </section>
+            <br>
+          </form>
+        </div>
+      </div>
+      <div class="overlay"></div>
+    </section>
+    
   <!-- END SILDER -->
 
 </body>

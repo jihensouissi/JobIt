@@ -27,4 +27,5 @@ urlpatterns = [
     path('PE/', include('PE.urls')),
     path('authentification', include('authentification.urls')),
     path('uploadoffer', views.uploadoffer, name='uploadoffer'),
+    
 ]

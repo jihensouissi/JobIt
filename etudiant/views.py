@@ -47,3 +47,30 @@ def get_docx_text(path):
     doc.SaveAs(FileFormat=wdFormatPDF)
     doc.Close()
     word.Quit()
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def UploadedResumes(request):
+    if request.method == 'POST':
+        # Handle the file upload logic here
+        file = request.FILES.get('file')
+        if file is not None:
+            # Process the uploaded file
+            # Add the connected user's login to the file name
+            user_login = request.user.username
+            file_name = f"{user_login}_{file.name}"
+            
+            with open('UploadedResumes/' + file_name, 'wb') as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)
+            # Optionally, you can perform additional operations with the uploaded file
+            
+            # Redirect to a success page or render a template
+            return render(request, 'etudiant/homeEtudiant.html')
+        else:
+            # Render the upload form
+            return render(request, 'etudiant/resume.html')
+    else:
+        # Render the upload form
+        return render(request, 'etudiant/resume.html')
