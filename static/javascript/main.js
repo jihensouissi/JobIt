@@ -82,11 +82,11 @@
           if ($(window).scrollTop() > offsetTop + headerHeight) {
             nav.addClass("is-fixed");
             injectSpace.show();
-            $("#trans-logo").attr("src", "images/logo.png");
+            $("#trans-logo").attr("src", "images/JOBitLogo.png");
           } else {
             nav.removeClass("is-fixed");
             injectSpace.hide();
-            $("#trans-logo").attr("src", "images/logo-white.png");
+            $("#trans-logo").attr("src", "images/JOBitLogo.png");
           }
 
           if ($(window).scrollTop() > 150) {
@@ -300,10 +300,11 @@
         },
       });
 
-      var thumbs = new Swiper(".gallery-thumb", {
-        slidesPerView: "auto",
-        spaceBetween: 17,
-        loop: true,
+      var thumbs = new Swiper(".gallery-thumb",
+
+          { slidesPerView: "auto",
+        spaceBetween: 17,},
+      {loop: true,
         slideToClickedSlide: true,
         slidesPerView: 3,
         breakpoints: {

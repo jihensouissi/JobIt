@@ -14,7 +14,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from .tokens import generateToken
 from six import text_type
-
+from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
 
 
@@ -31,9 +31,10 @@ def signup(request):
         username = request.POST['username']
         firstname = request.POST['firstname']
         lastname = request.POST['lastname']
+        role_select = request.POST['role_select']
         email = request.POST['email']
         password = request.POST['password']
-        confirmpwd = request.POST['comfirmpwd']
+        confirmpwd = request.POST['confirmpwd']
         if User.objects.filter(username=username):
             messages.error(request, 'username already taken please try another.')
             return redirect('signup')
@@ -53,37 +54,51 @@ def signup(request):
         if password != confirmpwd:
             messages.error(request, 'The password did not match! ')
             return redirect('signup')
+        else:
+            if role_select == "student":
 
-        my_user = User.objects.create_user(username, email, password)
-        my_user.first_name = firstname
-        my_user.last_name = lastname
-        my_user.is_active = False
-        my_user.save()
-        messages.success(request,
-                         'Your account has been successfully created. we have sent you an email You must comfirm in order to activate your account.')
-        # send email when account has been created successfully
+                myuser1 = User.objects.create_user(username, email, password)
+                myuser1.first_name = firstname
+                myuser1.last_name = lastname
+                myuser1.is_active = False
+                myuser1.save()
+                my_admin_group = Group.objects.get_or_create(name='Student')
+                my_admin_group[0].user_set.add(myuser1)
+                messages.success(request,
+                                 'Your account has been successfully created. we have sent you an email You must comfirm in order to activate your account.')
+
+            elif role_select == 'Employability pole':
+                 messages.error(request, 'You do not have permission to register as an Employability Pole')
+                 return render(request, 'register_error.html')
+            else:
+                 messages.error(request, 'Invalid role specified')
+                 return redirect('home')
+
+
+
+       # send email when account has been created successfully
         subject = "Welcome to JobIT"
-        message = "Welcome " + my_user.first_name + " " + my_user.last_name + "\n thank for chosing us.\n In order to login you need to comfirm your email account.\n thanks\n\n\n JobIt"
+        message = "Welcome " + myuser1.first_name + " " + myuser1.last_name + "\n thank for chosing us.\n In order to login you need to comfirm your email account.\n thanks\n\n\n JobIt"
 
         from_email = settings.EMAIL_HOST_USER
-        to_list = [my_user.email]
+        to_list = [myuser1.email]
         send_mail(subject, message, from_email, to_list, fail_silently=False)
 
-        # send the the confirmation email
+        # send the confirmation email
         current_site = get_current_site(request)
         email_suject = "confirm your email"
-        messageConfirm = render_to_string("emailConfimation.html", {
-            'name': my_user.first_name,
+        messageConfirm = render_to_string("emailConfiguration.html", {
+            'name': myuser1.first_name,
             'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(my_user.pk)),
-            'token': generateToken.make_token(my_user)
+            'uid': urlsafe_base64_encode(force_bytes(myuser1.pk)),
+            'token': generateToken.make_token(myuser1)
         })
 
         email = EmailMessage(
             email_suject,
             messageConfirm,
             settings.EMAIL_HOST_USER,
-            [my_user.email]
+            [myuser1.email]
         )
 
         email.fail_silently = False
@@ -113,10 +128,27 @@ def signin(request):
     return render(request, 'authentification/signin.html')
 
 
+def register_error(request):
+    return render(request, 'register_error.html')
+
+
 def signout(request):
     logout(request)
     messages.success(request, 'logout successfully!')
     return redirect('home')
+
+def is_PE(user):
+    return user.groups.filter(name='Employability Pole').exists()
+def is_student(user):
+    return user.groups.filter(name='Student').exists()
+def afterlogin(request):
+    if is_PE(request.user):
+        return redirect('PEHome')
+    elif is_student(request.user):
+        return redirect('etudiantHome')
+    else:
+        return render(request,'Recommendation/index.html')
+    return HttpResponse("home")
 
 
 def activate(request, uidb64, token):
