@@ -1687,10 +1687,11 @@ input[type="color"],
   margin-top: 14px;
   justify-content: center;
 }
-
 .menu-mobile-popup .header-customize-item.button {
   margin-top: 14px;
-  display: block;
+  color: red;
+  font-size: 20px; /* Adjust the font size as desired */
+  padding: 10px 20px; /* Adjust the padding to increase the button size */
 }
 
 .mobile-footer {
